@@ -13,24 +13,19 @@ import com.example.todoapp.databinding.FragmentRegisterPageBinding
 import com.google.android.material.datepicker.MaterialDatePicker
 import java.text.SimpleDateFormat
 import java.util.Locale
+import android.widget.DatePicker
+import androidx.databinding.DataBindingUtil
 
 
 class RegisterPageFragment : Fragment()  {
     private lateinit var binding : FragmentRegisterPageBinding
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-       binding = FragmentRegisterPageBinding.inflate(inflater,container,false)
-        binding.toolbarRegister.title = "ToDo Register(Create)"
-
-        binding.buttonSaveNote.setOnClickListener {
-            val task_title = binding.editTextTitle.text.toString()
-            val task_describe = binding.editTextDescribe.text.toString()
-            save(task_title,task_describe)
-
-        }
+        binding = DataBindingUtil.inflate(inflater,R.layout.fragment_register_page,container,false)
+        binding.registerPageFragment = this
+        binding.taskRegisterToolbarTitle = "ToDo Register(Create)"
         return binding.root
     }
-
-    fun save(task_title : String, task_describe : String) {
+    fun buttonSave(task_title : String, task_describe : String) {
         Log.e("Note Register","$task_title - $task_describe")
     }
 }

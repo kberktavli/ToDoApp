@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.SearchView.OnQueryTextListener
+import androidx.databinding.DataBindingUtil
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.todoapp.R
@@ -18,10 +19,9 @@ import com.example.todoapp.ui.adapter.TaskAdapter
 class MainPageFragment : Fragment() {
     private lateinit var binding : FragmentMainPageBinding
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        binding = FragmentMainPageBinding.inflate(inflater, container, false)
-        binding.toolbarMain.title = " ToDo "
-
-        binding.rv.layoutManager = LinearLayoutManager(requireContext())
+        binding = DataBindingUtil.inflate(inflater,R.layout.fragment_main_page, container, false)
+        binding.mainPageFragment = this
+        binding.mainPageToolbarTitle= " ToDo "
 
         val taskList = ArrayList<Task>()
         val t1 = Task(1,"Ödevler","Matematik Ödevini Yap")
@@ -40,7 +40,7 @@ class MainPageFragment : Fragment() {
         taskList.add(t7)
 
         val taskAdapter = TaskAdapter(requireContext(),taskList)
-        binding.rv.adapter = taskAdapter
+        binding.taskAdapter = taskAdapter
 
         binding.searchView.setOnQueryTextListener(object  : OnQueryTextListener{
             override fun onQueryTextChange(newText: String): Boolean {
@@ -54,12 +54,12 @@ class MainPageFragment : Fragment() {
             }
         })
 
-        binding.fab.setOnClickListener {
-            Navigation.findNavController(it).navigate(R.id.taskRegisterPass)
-        }
         return binding.root
     }
 
+    fun fabClick(it: View){
+        Navigation.findNavController(it).navigate(R.id.taskRegisterPass)
+    }
     fun search(searchingWord : String){
         Log.e("Task search",searchingWord)
     }

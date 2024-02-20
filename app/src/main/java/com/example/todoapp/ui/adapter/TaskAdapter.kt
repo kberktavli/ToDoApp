@@ -5,6 +5,7 @@ import android.graphics.Paint
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.example.todoapp.R
@@ -19,7 +20,7 @@ class TaskAdapter(var mContext: Context, var taskList: List<Task>) :
     inner class CardViewHolder(var VH: TaskItemCellBinding) : RecyclerView.ViewHolder(VH.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CardViewHolder {
-        val binding = TaskItemCellBinding.inflate(LayoutInflater.from(mContext), parent, false)
+        val binding : TaskItemCellBinding= DataBindingUtil.inflate(LayoutInflater.from(mContext),R.layout.task_item_cell, parent, false)
         return CardViewHolder(binding)
     }
 
@@ -27,8 +28,12 @@ class TaskAdapter(var mContext: Context, var taskList: List<Task>) :
         val task = taskList.get(position)
         val vh = holder.VH
 
+        /*
         vh.title.text = task.task_title
         vh.describe.text = task.task_describe
+         */
+
+        vh.taskObject = task
 
         vh.taskCellView.setOnClickListener {
             val pass = MainPageFragmentDirections.taskDetailPass(task = task)
